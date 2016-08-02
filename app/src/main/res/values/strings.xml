@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DiplomskiAplikacija</string>
+    <string name="registracija"> Register </string>
+    <string name="login"> Login </string>
+    <string name="registracija_ovdje"> Register here </string>
+    <string name="korisnik"> Name </string>
+    <string name="korisnik_prezime"> Surname </string>
+    <string name="welcome"> Dobro došli </string>
+    <string name="skuter"> Scooter </string>
+    <string name="naked"> Naked </string>
+</resources>
