@@ -2,8 +2,8 @@ package com.example.skaro.diplomskiaplikacija.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +17,6 @@ import com.example.skaro.diplomskiaplikacija.requests.RegisterRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -48,63 +46,58 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = etEmail.getText().toString();
 
 
-
-                if(TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(name)) {
                     etName.setError("Molimo unesite ime!");
                     return;
                 }
 
-                if(TextUtils.isEmpty(surname)) {
+                if (TextUtils.isEmpty(surname)) {
                     etSurName.setError("Molimo unesite prezime!");
                     return;
                 }
-                if(TextUtils.isEmpty(username)) {
+                if (TextUtils.isEmpty(username)) {
                     etUserName.setError("Molimo unesite korisničko ime!");
                     return;
                 }
-                if(TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(password)) {
                     etPassword.setError("Molimo unesite zaporku!");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password2)) {
+                if (TextUtils.isEmpty(password2)) {
                     etPassword2.setError("Molimo ponovno unesite zaporku!");
                     return;
                 }
-                if(etPassword.getText().toString().equals(etPassword2.getText().toString())) {
+                if (etPassword.getText().toString().equals(etPassword2.getText().toString())) {
 
-                }else{
+                } else {
                     etPassword2.setError("Vaša zaporka se ne podudara!");
                     return;
 
                 }
 
 
-                if(TextUtils.isEmpty(age)){
+                if (TextUtils.isEmpty(age)) {
                     etAge.setError("Molimo unesite godine");
                     return;
                 }
 
-                if(TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)) {
                     etEmail.setError("Molimo unesite email!");
                     return;
                 }
 
-                if(isValidEmail(email)) {
-
-                }else {etEmail.setError("Vaš mail je netočan");
-                    return;
+                if (!email.contains("@")) {
+                    etEmail.setError("Vaš mail je netočan");
                 }
 
-                    Response.Listener <String> respListener = new Response.Listener<String>() {
+                Response.Listener<String> respListener = new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-
-
 
 
                             if (success) {
@@ -116,8 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         .setPositiveButton("Nastavi", null)
                                         .create()
                                         .show();
-
-
 
 
                             } else {
@@ -144,16 +135,4 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
-
-    private boolean isValidEmail(String email){
-
-        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
-    }
-
 }

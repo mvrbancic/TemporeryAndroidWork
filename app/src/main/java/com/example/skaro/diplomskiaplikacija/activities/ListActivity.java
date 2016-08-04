@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.skaro.diplomskiaplikacija.R;
-import com.example.skaro.diplomskiaplikacija.adapters.GetDataAdapter;
-import com.example.skaro.diplomskiaplikacija.adapters.RecyclerViewAdapter;
+import com.example.skaro.diplomskiaplikacija.adapters.MotorsListAdapter;
+import com.example.skaro.diplomskiaplikacija.entities.Motor;
+import com.example.skaro.diplomskiaplikacija.requests.ListRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,36 +22,39 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements MotorsListAdapter.OnMotorClickListener {
 
 
-    RecyclerView recyclerView;
+    RecyclerView motorsRecyclerView;
     RecyclerView.LayoutManager recyclerViewlayoutManager;
-    List<GetDataAdapter> motoriListArray;
-    RecyclerView.Adapter recyclerViewadapter;
+    List<Motor> motoriList;
 
     private static final String TAG = ListActivity.class.getSimpleName();
-    String LIST_REQUEST_URL = "http://mojdiplomski.netai.net/List2.php?category=";
 
-    JsonArrayRequest jsonArrayRequest;
+    ListRequest listRequest;
     RequestQueue requestQueue;
-    RequestQueue queue;
+    MotorsListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        motoriListArray = new ArrayList<>();
+        initData();
+        initRecyclerView();
+    }
 
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview1);
-        recyclerView.setHasFixedSize(true);
+    private void initRecyclerView() {
+        motorsRecyclerView = (RecyclerView) findViewById(R.id.recyclerview1);
+        motorsRecyclerView.setHasFixedSize(true);
         recyclerViewlayoutManager = new LinearLayoutManager(this);
+        motorsRecyclerView.setLayoutManager(recyclerViewlayoutManager);
+        adapter = new MotorsListAdapter(this);
+        motorsRecyclerView.setAdapter(adapter);
+    }
 
-        recyclerView.setLayoutManager(recyclerViewlayoutManager);
-
-
+    private void initData() {
+        motoriList = new ArrayList<>();
         getMotori();
     }
 
@@ -60,58 +63,47 @@ public class ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String category = intent.getStringExtra("category");
 
-        jsonArrayRequest = new JsonArrayRequest(LIST_REQUEST_URL,
-
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        jsonParseData(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-
+        listRequest = new ListRequest(category, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                jsonParseData(response);
+            }
+        });
         requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(listRequest);
+    }
 
-        requestQueue.add(jsonArrayRequest);
+    public void jsonParseData(String response) {
+        try {
+            JSONObject responseObject = new JSONObject(response);
+
+            if (responseObject.getBoolean("success")) {
+
+                JSONArray motoriArray = responseObject.getJSONArray("motori");
+
+                for (int i = 0; i < motoriArray.length(); i++) {
+                    Motor motor = new Motor();
+                    JSONObject motorJson = motoriArray.getJSONObject(i);
+                    motor.name = motorJson.getString("name");
+                    motor.imageURL = motorJson.getString("image");
+
+                    // TODO bilokoji marko nek doda ostatak podataka
+
+                    motoriList.add(motor);
+                }
+                adapter.setMotorsList(motoriList);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void jsonParseData(JSONArray array) {
-
-        for (int i = 0; i < array.length(); i++) {
-
-            GetDataAdapter motor = new GetDataAdapter();
-
-            JSONObject json = null;
-            try {
-
-                json = array.getJSONObject(i);
-
-                //GetDataAdapter2.setImageTitleNamee(json.getString(JSON_IMAGE_TITLE_NAME));
-
-                //GetDataAdapter2.setImageServerUrl(json.getString(JSON_IMAGE_URL));
-
-                motor.setManufacturer(json.getString("manufacturer"));
-                motor.setName(json.getString("name"));
-                motor.setCategory(json.getString("category"));
-                motor.setImage(json.getString("image"));
-
-            } catch (JSONException e) {
-
-                e.printStackTrace();
-            }
-            motoriListArray.add(motor);
-        }
-
-        recyclerViewadapter = new RecyclerViewAdapter(motoriListArray, this);
-
-        recyclerView.setAdapter(recyclerViewadapter);
+    @Override
+    public void onClick(Motor motor) {
+        Toast.makeText(this, motor.name, Toast.LENGTH_SHORT).show();
     }
 }
 

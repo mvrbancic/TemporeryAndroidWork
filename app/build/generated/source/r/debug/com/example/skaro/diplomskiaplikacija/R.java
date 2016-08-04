@@ -1764,7 +1764,6 @@ containing a value of this type.
         public static final int notification_template_icon_bg=0x7f02004b;
     }
     public static final class id {
-        public static final int VollyNetworkImageView1=0x7f0c0070;
         public static final int action0=0x7f0c0062;
         public static final int action_bar=0x7f0c0042;
         public static final int action_bar_activity_content=0x7f0c0000;
@@ -1826,6 +1825,9 @@ containing a value of this type.
         public static final int list_item=0x7f0c0029;
         public static final int media_actions=0x7f0c0065;
         public static final int middle=0x7f0c001c;
+        public static final int motor_image_view=0x7f0c0071;
+        public static final int motor_layout=0x7f0c0070;
+        public static final int motor_name=0x7f0c0072;
         public static final int multiply=0x7f0c0015;
         public static final int never=0x7f0c0020;
         public static final int none=0x7f0c000f;
@@ -1867,7 +1869,6 @@ containing a value of this type.
         public static final int textSpacerNoButtons=0x7f0c0035;
         public static final int textView2=0x7f0c0057;
         public static final int textView3=0x7f0c0059;
-        public static final int textView_item=0x7f0c0071;
         public static final int time=0x7f0c0068;
         public static final int title=0x7f0c002b;
         public static final int title_template=0x7f0c0030;

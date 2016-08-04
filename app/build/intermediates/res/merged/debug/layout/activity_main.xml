@@ -7,71 +7,71 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/welcome"
         android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="28dp"
+        android:text="@string/welcome"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/korisnik"
         android:id="@+id/textView2"
-        android:layout_below="@+id/tvWelcome"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etName3"
-        android:editable="false"
-        android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/tvWelcome" />
+        android:layout_below="@+id/tvWelcome"
+        android:text="@string/korisnik"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/etName3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvWelcome"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:editable="false" />
 
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/korisnik_prezime"
-        android:id="@+id/textView3"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/etName3"
-        android:layout_alignParentStart="true" />
+        android:text="@string/korisnik_prezime"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/etSurname"
-        android:editable="false"
-        android:layout_below="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etName3"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/etName3" />
+        android:layout_below="@+id/textView3"
+        android:editable="false" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/skuter"
         android:id="@+id/btScooter"
-        android:layout_below="@+id/etSurname"
-        android:layout_alignEnd="@+id/etSurname"
-        android:layout_marginTop="101dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/naked"
+        android:layout_alignEnd="@+id/etSurname"
+        android:layout_below="@+id/etSurname"
+        android:layout_marginTop="101dp"
+        android:text="@string/skuter" />
+
+    <Button
         android:id="@+id/btNaked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btScooter"
+        android:layout_marginStart="56dp"
         android:layout_toEndOf="@+id/btScooter"
-        android:layout_marginStart="56dp" />
+        android:text="@string/naked" />
 
 </RelativeLayout>
