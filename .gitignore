@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 /build
+.idea
 ### Windows template
 # Windows image file caches
 Thumbs.db
